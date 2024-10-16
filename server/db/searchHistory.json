@@ -1,14 +1,14 @@
 [
   {
-    "id": "1",
+    "id": "6",
+    "name": "Las Vegas"
+  },
+  {
+    "id": "7",
     "name": "San Diego"
   },
   {
-    "id": "2",
-    "name": "San Diego"
-  },
-  {
-    "id": "3",
-    "name": "Las vegas"
+    "id": "8",
+    "name": "Las Vegas"
   }
 ]

@@ -34,7 +34,7 @@ class WeatherService {
   private async fetchLocationData(query: string): Promise<Coordinates> {
     const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey}`);
     const data = await response.json();
-
+    console.log(data);
     if (data.length === 0) {
       throw new Error('City not found');
     }
@@ -59,7 +59,7 @@ class WeatherService {
 
   // TODO: Create buildWeatherQuery method
   private buildWeatherQuery(coordinates: Coordinates, type: 'weather' | 'forecast'): string {
-    return `${this.baseURL}/${type}?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${this.apiKey}`;
+    return `${this.baseURL}/${type}?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${this.apiKey}&units=imperial`;
   }
 
 
@@ -113,7 +113,7 @@ class WeatherService {
       date: new Date().toLocaleDateString(),
       icon: response.weather[0]?.icon,
       description: response.weather[0].description,
-      temperature: response.main.temp,
+      tempF: response.main.temp,
       humidity: response.main.humidity,
       windSpeed: response.wind.speed,
     };
@@ -123,16 +123,18 @@ class WeatherService {
 
   // TODO: Complete buildForecastArray method
   private buildForecastArray(weatherData: any[]): any[] {
-    return weatherData.map(item => {
-      return {
-        date: new Date(item.dt_txt).toLocaleDateString(),
-        icon: item.weather[0].icon,
-        description: item.weather[0].description,
-        temperature: item.main.temp,
-        humidity: item.main.humidity,
-        windSpeed: item.wind.speed,
-      };
+    const forecastData: any[] = [];
+    weatherData.forEach((item, i) => {
+      if (i % 8 === 0) {
+        forecastData.push({ date: new Date(item.dt_txt).toLocaleDateString(),
+          icon: item.weather[0].icon,
+          description: item.weather[0].description,
+          tempF: item.main.temp,
+          humidity: item.main.humidity,
+          windSpeed: item.wind.speed,});
+      } 
     });
+    return forecastData;
   }
 
 
