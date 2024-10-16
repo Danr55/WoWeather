@@ -49,5 +49,3 @@ class HistoryService {
 }
 
 export default new HistoryService();
-
-console.log(Response)
