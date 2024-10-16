@@ -34,7 +34,6 @@ class WeatherService {
   private async fetchLocationData(query: string): Promise<Coordinates> {
     const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey}`);
     const data = await response.json();
-    console.log(data);
     if (data.length === 0) {
       throw new Error('City not found');
     }
@@ -89,9 +88,6 @@ class WeatherService {
       const currentData = await currentResponse.json();
       const forecastData = await forecastResponse.json();
   
-      console.log('Current Weather Data:', currentData);
-      console.log('Forecast Data:', forecastData);
-  
       // Combine current weather and forecast data
       return {
         ...currentData,
@@ -107,7 +103,6 @@ class WeatherService {
 
   // TODO: Build parseCurrentWeather method
   private parseCurrentWeather(response: any): Weather {
-    console.log('Weather Response:', response);
     const currentWeather = {
       city: response.name,
       date: new Date().toLocaleDateString(),
